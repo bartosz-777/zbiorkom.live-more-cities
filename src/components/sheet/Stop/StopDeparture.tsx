@@ -10,7 +10,6 @@ import { useMap } from "@vis.gl/react-maplibre";
 import StopDepartureActions from "./StopDepartureActions";
 import SmallAlert from "@/ui/SmallAlert";
 import { useTranslation } from "react-i18next";
-import { useChristmasStore } from "@/hooks/useChristmasVehicles";
 
 export default ({ departure, isStation }: { departure: StopDeparture; isStation: boolean }) => {
     const { t } = useTranslation("Vehicle");
@@ -21,7 +20,6 @@ export default ({ departure, isStation }: { departure: StopDeparture; isStation:
     const { city } = useParams();
 
     const vehicle = departure[EStopDeparture.vehicle];
-    const vehicleId = vehicle?.[EVehicle.id] || departure[EStopDeparture.vehicleId];
     const scheduled = departure[EStopDeparture.departure][EStopTime.scheduled];
     const estimated = departure[EStopDeparture.departure][EStopTime.estimated];
     const delay = departure[EStopDeparture.departure][EStopTime.delay];
@@ -32,11 +30,6 @@ export default ({ departure, isStation }: { departure: StopDeparture; isStation:
 
     const isCancelled = delay === "cancelled";
     const showCountdown = !isCancelled && estimated > Date.now();
-
-    // Sprawdź czy to świąteczny pojazd
-    const isChristmasVehicle = useChristmasStore((state) =>
-        vehicleId ? state.isChristmasVehicle(vehicleId) : false,
-    );
 
     const onSuperClick = () => {
         navigate(
@@ -66,7 +59,6 @@ export default ({ departure, isStation }: { departure: StopDeparture; isStation:
                 }
             }}
             onDoubleClick={onSuperClick}
-            className={isChristmasVehicle ? "departure-snow" : undefined}
             sx={{
                 display: "flex",
                 flexDirection: "column",

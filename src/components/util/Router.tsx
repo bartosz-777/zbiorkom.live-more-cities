@@ -13,8 +13,6 @@ const Blog = lazy(() => import("@/pages/Blog"));
 const BlogPost = lazy(() => import("@/pages/Blog/BlogPost"));
 const BlogPosts = lazy(() => import("@/pages/Blog/BlogPosts"));
 
-const Christmas = lazy(() => import("@/pages/Christmas"));
-
 const Brigades = lazy(() => import("@/pages/Brigades"));
 const Brigade = lazy(() => import("@/pages/Brigades/Brigade"));
 const BrigadesSelect = lazy(() => import("@/pages/Brigades/Select"));
@@ -112,14 +110,6 @@ export default () => {
                                     element: (
                                         <Suspense>
                                             <Executions />
-                                        </Suspense>
-                                    ),
-                                },
-                                {
-                                    path: "swiateczne",
-                                    element: (
-                                        <Suspense>
-                                            <Christmas />
                                         </Suspense>
                                     ),
                                 },
@@ -377,11 +367,7 @@ export default () => {
         },
         {
             path: "*",
-            element: (
-                <Suspense>
-                    <Error />
-                </Suspense>
-            ),
+            loader: () => redirect("/"),
         },
     ]);
 
